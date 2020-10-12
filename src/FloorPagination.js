@@ -9,7 +9,6 @@ export default function FloorPagination(props) {
     floorList.length < max_page
       ? floorList.length
       : max_page; /** show how many floors will be visible at a time */
-
   const [centralPage, updatePage] = useState(currentFloor);
 
   useEffect(() => {
@@ -23,6 +22,9 @@ export default function FloorPagination(props) {
 
   function getPages(array, page_no, page_size) {
     let currentIndex = array.findIndex((x) => x.Did === page_no);
+    if (array.length <= max_page) {
+      return array;
+    }
     let start =
       currentIndex === array.length - 1
         ? currentIndex - (page_size - 1)
@@ -67,7 +69,7 @@ export default function FloorPagination(props) {
 
   function scrollDown() {
     let nextIndex = floorList.findIndex((x) => x.Did === centralPage) + 1;
-    if (nextIndex < floorList.length - 1) {
+    if (nextIndex < floorList.length - 2) {
       updatePage(floorList[nextIndex].Did);
     }
   }
